@@ -1,0 +1,45 @@
+sudo nano findStatus.sh
+
+#!/bin/bash
+status=`sudo ps aux | grep -i java\ -jar\ /home/pi/Desktop/Room1.jar | awk '{print $8}'| grep Sl`
+
+echo "$status"
+
+if [ "$status" == 'Sl+' ]
+
+then
+        
+	echo "Jar already running"
+
+elif [ "$status" == 'Sl' ]
+
+then    
+        
+	echo "Jar already running"
+
+else
+        
+	java -jar /home/pi/Desktop/Room1.jar
+
+fi
+
+
+
+
+
+
+
+
+cd /etc
+
+sudo nano rc.local
+
+#Run the the DT080B team project jar on startup
+
+java -jar /home/pi/Desktop/Room1.jar
+
+
+
+
+sudo crontab -e
+*/15 * * * * /home/pi/findStatus.sh
